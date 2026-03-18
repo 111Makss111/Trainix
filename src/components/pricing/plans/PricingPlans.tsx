@@ -1,4 +1,16 @@
-﻿const pricingPlans = [
+﻿type PricingPlan = {
+  name: string;
+  badge: string;
+  price: string;
+  description: string;
+  details: readonly string[];
+  cta: string;
+  accent: string;
+  glow: string;
+  featured?: boolean;
+};
+
+const pricingPlans: readonly PricingPlan[] = [
   {
     name: "Early access",
     badge: "Ранній вхід",
@@ -45,7 +57,7 @@
     accent: "from-amber-200/18 via-amber-100/7 to-transparent",
     glow: "rgba(255,219,150,0.16)",
   },
-] as const;
+];
 
 type PricingPlansProps = {
   isVisible: boolean;

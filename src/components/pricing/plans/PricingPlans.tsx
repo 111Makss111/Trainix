@@ -1,63 +1,4 @@
-﻿type PricingPlan = {
-  name: string;
-  badge: string;
-  price: string;
-  description: string;
-  details: readonly string[];
-  cta: string;
-  accent: string;
-  glow: string;
-  featured?: boolean;
-};
-
-const pricingPlans: readonly PricingPlan[] = [
-  {
-    name: "Early access",
-    badge: "Ранній вхід",
-    price: "Запрошення",
-    description:
-      "Для тих, хто хоче першими бачити нові екрани, фічі та напрямок розвитку Trainix.",
-    details: [
-      "ранній доступ до тестових релізів",
-      "пріоритетні апдейти в Telegram",
-      "можливість впливати на roadmap",
-    ],
-    cta: "Запросити мене",
-    accent: "from-white/12 via-white/6 to-transparent",
-    glow: "rgba(255,255,255,0.12)",
-  },
-  {
-    name: "Free beta",
-    badge: "Старт безкоштовно",
-    price: "$0",
-    description:
-      "Найкращий стартовий варіант зараз: протестувати ідею, дивитись прогрес і спокійно звикати до додатку.",
-    details: [
-      "базові трекери та активності",
-      "доступ до ключових екранів бети",
-      "оновлення в міру розвитку продукту",
-    ],
-    cta: "Почати з бети",
-    accent: "from-emerald-300/24 via-emerald-200/10 to-transparent",
-    glow: "rgba(111,255,160,0.24)",
-    featured: true,
-  },
-  {
-    name: "Supporter",
-    badge: "Символічна підтримка",
-    price: "$5",
-    description:
-      "Для тих, хто хоче підтримати запуск Trainix і допомогти швидше довести продукт до сильного релізу.",
-    details: [
-      "усе з Free beta",
-      "бейдж раннього підтримувача",
-      "окремий канал з інсайтами по розробці",
-    ],
-    cta: "Підтримати Trainix",
-    accent: "from-amber-200/18 via-amber-100/7 to-transparent",
-    glow: "rgba(255,219,150,0.16)",
-  },
-];
+import { pricingPlans } from "@/utils/support-plans";
 
 type PricingPlansProps = {
   isVisible: boolean;
@@ -82,11 +23,11 @@ function CheckIcon() {
 
 export function PricingPlans({ isVisible }: PricingPlansProps) {
   return (
-    <div className="mt-10 grid gap-4 lg:grid-cols-3">
+    <div className="mt-10 grid items-stretch gap-4 lg:grid-cols-3">
       {pricingPlans.map((plan, index) => (
         <article
           key={plan.name}
-          className={`group relative overflow-hidden rounded-[26px] border px-5 py-5 transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] sm:px-6 sm:py-6 ${
+          className={`group relative h-full overflow-hidden rounded-[26px] border px-5 py-5 transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] sm:px-6 sm:py-6 ${
             plan.featured
               ? "border-emerald-200/22 bg-[linear-gradient(180deg,rgba(13,20,18,0.8),rgba(8,14,12,0.56)_100%)]"
               : "border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02)_100%)]"
@@ -101,8 +42,8 @@ export function PricingPlans({ isVisible }: PricingPlansProps) {
           />
           <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/18 to-transparent" />
 
-          <div className="relative">
-            <div className="flex items-start justify-between gap-4">
+          <div className="relative flex h-full flex-col">
+            <div className="flex min-h-[4.75rem] items-start justify-between gap-4">
               <div>
                 <p className="text-[0.68rem] font-medium uppercase tracking-[0.2em] text-white/54">
                   {plan.badge}
@@ -111,11 +52,15 @@ export function PricingPlans({ isVisible }: PricingPlansProps) {
                   {plan.name}
                 </h3>
               </div>
-              {plan.featured ? (
-                <span className="rounded-full border border-emerald-200/18 bg-emerald-300/12 px-3 py-1 text-[0.72rem] font-medium text-emerald-100">
-                  Recommended
-                </span>
-              ) : null}
+              <span
+                className={`rounded-full border px-3 py-1 text-[0.72rem] font-medium ${
+                  plan.featured
+                    ? "border-emerald-200/18 bg-emerald-300/12 text-emerald-100"
+                    : "invisible border-transparent text-transparent"
+                }`}
+              >
+                Рекомендовано
+              </span>
             </div>
 
             <div className="mt-8 flex items-end gap-2">
@@ -123,11 +68,11 @@ export function PricingPlans({ isVisible }: PricingPlansProps) {
                 {plan.price}
               </span>
               <span className="pb-1 text-sm text-white/44">
-                {plan.price === "$0" || plan.price === "$5" ? "/ start" : ""}
+                {plan.price !== "0 zł" ? "/ разово" : ""}
               </span>
             </div>
 
-            <p className="mt-4 text-sm leading-7 text-white/62">
+            <p className="mt-4 min-h-[6rem] text-sm leading-7 text-white/62">
               {plan.description}
             </p>
 
@@ -151,16 +96,42 @@ export function PricingPlans({ isVisible }: PricingPlansProps) {
               ))}
             </ul>
 
-            <a
-              href={plan.featured ? "#project" : "#community"}
-              className={`mt-8 inline-flex h-12 w-full items-center justify-center rounded-full px-5 text-sm font-medium transition-all duration-300 ${
-                plan.featured
-                  ? "bg-[linear-gradient(90deg,#99f870_0%,#48d66d_100%)] text-[#071108] shadow-[0_18px_40px_rgba(107,255,148,0.22)] hover:brightness-105"
-                  : "border border-white/12 bg-white/7 text-white/88 backdrop-blur-md hover:border-white/18 hover:bg-white/10"
-              }`}
-            >
-              {plan.cta}
-            </a>
+            <div className="mt-auto flex min-h-[7.5rem] flex-col justify-end pt-8">
+              {plan.checkoutPlanId ? (
+                <form action="/api/support/checkout" method="POST">
+                  <input type="hidden" name="planId" value={plan.checkoutPlanId} />
+                  <button
+                    type="submit"
+                    className={`inline-flex h-12 w-full items-center justify-center rounded-full px-5 text-sm font-medium transition-all duration-300 ${
+                      plan.featured
+                        ? "bg-[linear-gradient(90deg,#99f870_0%,#48d66d_100%)] text-[#071108] shadow-[0_18px_40px_rgba(107,255,148,0.22)] hover:brightness-105"
+                        : "border border-white/12 bg-white/7 text-white/88 backdrop-blur-md hover:border-white/18 hover:bg-white/10"
+                    }`}
+                  >
+                    {plan.cta}
+                  </button>
+                </form>
+              ) : (
+                <a
+                  href={plan.href ?? "#community"}
+                  className={`inline-flex h-12 w-full items-center justify-center rounded-full px-5 text-sm font-medium transition-all duration-300 ${
+                    plan.featured
+                      ? "bg-[linear-gradient(90deg,#99f870_0%,#48d66d_100%)] text-[#071108] shadow-[0_18px_40px_rgba(107,255,148,0.22)] hover:brightness-105"
+                      : "border border-white/12 bg-white/7 text-white/88 backdrop-blur-md hover:border-white/18 hover:bg-white/10"
+                  }`}
+                >
+                  {plan.cta}
+                </a>
+              )}
+
+              <div className="mt-3 min-h-[2.5rem]">
+                {plan.footnote ? (
+                  <p className="text-xs leading-5 text-white/44">
+                    {plan.footnote}
+                  </p>
+                ) : null}
+              </div>
+            </div>
           </div>
         </article>
       ))}

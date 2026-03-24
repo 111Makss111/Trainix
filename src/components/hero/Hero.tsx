@@ -1,5 +1,5 @@
 import Image from "next/image";
-import treningWork from "@/img/trening-work.png";
+import treningWork from "@/img/train1.png";
 import { HeroContent } from "./content/HeroContent";
 import { HeroVisual } from "./visual/HeroVisual";
 
@@ -14,7 +14,7 @@ export function Hero() {
         alt=""
         fill
         priority
-        sizes="(min-width: 1280px) 1200px, (min-width: 1024px) 100vw, 100vw"
+        sizes="cover"
         className="object-cover object-center"
       />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(6,10,16,0.86)_0%,rgba(6,10,16,0.78)_28%,rgba(6,10,16,0.45)_56%,rgba(6,10,16,0.7)_100%)]" />

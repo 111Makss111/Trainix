@@ -27,7 +27,7 @@ const contactLinks: FooterLink[] = [
     external: true,
   },
   {
-    label: "777docmax777@gmail.com",
+    label: "support.trainix@gmail.com",
     href: "mailto:777docmax777@gmail.com",
     external: true,
   },
@@ -57,13 +57,7 @@ function FooterLinkItem({ link }: { link: FooterLink }) {
   );
 }
 
-function FooterGroup({
-  title,
-  links,
-}: {
-  title: string;
-  links: FooterLink[];
-}) {
+function FooterGroup({ title, links }: { title: string; links: FooterLink[] }) {
   return (
     <div>
       <p className="text-[0.68rem] font-medium uppercase tracking-[0.24em] text-emerald-200/62">

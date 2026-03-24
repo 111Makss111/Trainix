@@ -4,7 +4,8 @@ import { LegalPage } from "@/components/legal/LegalPage";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Contact information for Trainix early beta, support, and community.",
+  description:
+    "Contact information for Trainix early beta, support, and community.",
 };
 
 export default function ContactPage() {
@@ -15,7 +16,7 @@ export default function ContactPage() {
       intro="Якщо ти хочеш отримати ранній доступ, поділитися ідеєю, написати про баг або обговорити розвиток продукту, тут зібрані основні канали зв'язку. На етапі ранньої beta це найшвидший спосіб напряму достукатися до Trainix."
       lastUpdated="March 17, 2026"
       facts={[
-        { label: "Email", value: "777docmax777@gmail.com" },
+        { label: "Email", value: "support.trainix@gmail.com" },
         { label: "Telegram", value: "Trainix community group" },
         { label: "Формат", value: "Early beta communication and feedback" },
       ]}

@@ -119,7 +119,7 @@ export function CommunityPanel({ isVisible }: CommunityPanelProps) {
                 />
               </svg>
             </span>
-            777docmax777@gmail.com
+            support.trainix@gmail.com
           </a>
         </div>
       </div>

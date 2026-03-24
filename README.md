@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Trainix Beta + Optional Support
+
+This project now uses a simpler model:
+
+- the Android beta APK is free to download
+- support is optional and handled as a one-time donation
+- Stripe webhook events persist donation records in Neon
+- after a successful donation, the user is redirected back to `/download` with a thank-you state
 
 ## Getting Started
 
-First, run the development server:
+1. Copy `.env.example` to `.env.local`.
+2. Create a Neon project and copy the pooled connection string into `DATABASE_URL`.
+3. Configure Stripe:
+
+```bash
+DATABASE_URL=postgresql://user:password@ep-example-pooler.eu-central-1.aws.neon.tech/neondb?sslmode=require
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+TRAINIX_SUPPORT_DONATION_PRICE_ID=price_...
+```
+
+4. Configure APK delivery with either a local file path or a remote URL:
+
+```bash
+TRAINIX_APK_PATH=storage/trainix.apk
+# or
+TRAINIX_APK_URL=https://downloads.example.com/trainix.apk
+```
+
+5. In Stripe, point your webhook endpoint to:
+
+```bash
+https://your-domain.com/api/stripe/webhook
+```
+
+Subscribe at least to:
+
+- `checkout.session.completed`
+- `checkout.session.async_payment_succeeded`
+- `checkout.session.async_payment_failed`
+- `checkout.session.expired`
+
+6. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Flow Overview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. The pricing section offers a free APK option and an optional donation.
+2. The donation card posts to `/api/support/checkout`.
+3. Stripe webhook events write or update donation records in Neon.
+4. Stripe sends the user back to `/support/claim?session_id=...`.
+5. The app verifies the donation and redirects to `/download?support=success`.
+6. `/api/download/apk` serves the APK publicly.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Notes
+
+- The database schema is created automatically on first request.
+- `TRAINIX_APK_PATH` is best for local or self-hosted setups.
+- `TRAINIX_APK_URL` is better when the APK already lives in object storage or behind a CDN.
+- If both are set, the remote URL takes precedence.
+- Donation records stay in Neon even though APK access is free.
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Neon Serverless Driver](https://neon.com/docs/serverless/serverless-driver)
+- [Stripe Checkout](https://docs.stripe.com/payments/checkout)
+- [Stripe Webhooks](https://docs.stripe.com/webhooks)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploying
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For a real production deployment, prefer storing the APK outside the repo and pointing `TRAINIX_APK_URL` to a controlled download location or object storage URL.

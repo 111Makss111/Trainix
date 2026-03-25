@@ -39,16 +39,25 @@ export async function GET(request: Request) {
       );
     }
 
-    const purchase = await upsertSupportPurchaseFromSession({
-      session,
-      source: "claim",
-    });
+    try {
+      const purchase = await upsertSupportPurchaseFromSession({
+        session,
+        source: "claim",
+      });
 
-    if (purchase?.payment_status !== "paid") {
-      return NextResponse.redirect(
-        new URL("/support/unavailable?reason=verification", request.url),
-        303,
-      );
+      if (purchase?.payment_status === "paid") {
+        return NextResponse.redirect(
+          new URL("/download?support=success", request.url),
+          303,
+        );
+      }
+
+      console.error("Checkout claim did not persist a paid purchase", {
+        sessionId,
+        paymentStatus: session.payment_status,
+      });
+    } catch (error) {
+      console.error("Checkout claim persistence failed after paid session", error);
     }
 
     return NextResponse.redirect(
@@ -56,7 +65,7 @@ export async function GET(request: Request) {
       303,
     );
   } catch (error) {
-    console.error("Checkout claim failed", error);
+    console.error("Checkout claim verification failed", error);
 
     return NextResponse.redirect(
       new URL("/support/unavailable?reason=verification", request.url),

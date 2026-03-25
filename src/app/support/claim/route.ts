@@ -19,10 +19,17 @@ export async function GET(request: Request) {
   }
 
   try {
-    const existingPurchase = await getSupportPurchaseBySessionId(sessionId);
+    const existingPurchase = await getSupportPurchaseBySessionId(sessionId).catch(
+      (error) => {
+        console.error("Checkout claim lookup failed", error);
+        return null;
+      },
+    );
 
     if (existingPurchase?.payment_status === "paid") {
-      await markSupportPurchaseClaimed(sessionId);
+      await markSupportPurchaseClaimed(sessionId).catch((error) => {
+        console.error("Checkout claim mark failed", error);
+      });
 
       return NextResponse.redirect(
         new URL("/download?support=success", request.url),
@@ -45,17 +52,12 @@ export async function GET(request: Request) {
         source: "claim",
       });
 
-      if (purchase?.payment_status === "paid") {
-        return NextResponse.redirect(
-          new URL("/download?support=success", request.url),
-          303,
-        );
+      if (purchase?.payment_status !== "paid") {
+        console.error("Checkout claim did not persist a paid purchase", {
+          sessionId,
+          paymentStatus: session.payment_status,
+        });
       }
-
-      console.error("Checkout claim did not persist a paid purchase", {
-        sessionId,
-        paymentStatus: session.payment_status,
-      });
     } catch (error) {
       console.error("Checkout claim persistence failed after paid session", error);
     }

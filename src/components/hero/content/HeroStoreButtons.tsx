@@ -26,12 +26,12 @@ const storeLinks = [
 
 export function HeroStoreButtons() {
   return (
-    <div className="mt-5 flex flex-wrap gap-3">
+    <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
       {storeLinks.map((store) => (
         <a
           key={store.label}
           href={store.href}
-          className="inline-flex h-14 items-center gap-3 rounded-2xl border border-white/10 bg-black/35 px-4 text-left text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-sm transition-colors duration-200 hover:border-emerald-300/25 hover:bg-black/45"
+          className="inline-flex h-14 w-full items-center gap-3 rounded-2xl border border-white/10 bg-black/35 px-4 text-left text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-sm transition-colors duration-200 hover:border-emerald-300/25 hover:bg-black/45 sm:w-auto"
         >
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/8 text-white">
             {store.icon}

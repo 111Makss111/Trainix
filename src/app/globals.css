@@ -7,12 +7,16 @@
 
 html {
   scroll-behavior: smooth;
+  background: #02040a;
+  color-scheme: dark;
 }
 
 body {
   min-height: 100vh;
   color: var(--foreground);
+  background-color: #02040a;
   background: linear-gradient(180deg, #030712 0%, #040b16 35%, #02040a 100%);
+  overflow-x: hidden;
 }
 @keyframes neon-breathe {
   0% {

@@ -129,10 +129,16 @@ export default function Header() {
         }`}
       >
         <div className="rounded-[22px] border border-white/8 bg-white/[0.025] p-3">
-          <div className="mb-3 flex items-center justify-between gap-3 px-1">
-            <p className="text-[0.72rem] font-medium uppercase tracking-[0.24em] text-white/42">
-              Меню
-            </p>
+          <div className="mb-4 flex items-start justify-between gap-3 px-1">
+            <div className="max-w-[15rem]">
+              <p className="text-[0.7rem] font-medium uppercase tracking-[0.22em] text-emerald-100/52">
+                Trainix beta
+              </p>
+              <p className="mt-2 text-sm leading-6 text-white/68">
+                APK уже доступний безкоштовно. Обери потрібну секцію і швидко
+                подивись, що вміє Trainix.
+              </p>
+            </div>
 
             <button
               type="button"

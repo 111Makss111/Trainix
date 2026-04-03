@@ -1,6 +1,6 @@
 const menuItems = [
   {
-    label: "Проєкт",
+    label: "Проект",
     href: "#project",
   },
   {

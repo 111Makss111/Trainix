@@ -3,10 +3,10 @@ import { HeroStoreButtons } from "./HeroStoreButtons";
 export function HeroContent() {
   return (
     <div className="relative z-10 mx-auto w-full max-w-[560px] text-center lg:mx-0 lg:text-left">
-      <h1 className="mx-auto max-w-[12ch] text-[2.7rem] font-semibold leading-[0.95] tracking-[-0.06em] text-white sm:max-w-[15ch] sm:text-5xl lg:mx-0 lg:max-w-[24ch] lg:text-[4.25rem]">
-        Trainix App - Твій персональний шлях до{" "}
+      <h1 className="mx-auto max-w-[14ch] text-[2.35rem] font-semibold leading-[1.02] tracking-[-0.05em] text-white sm:max-w-[16ch] sm:text-5xl sm:leading-[1] lg:mx-0 lg:max-w-[24ch] lg:text-[4.25rem] lg:leading-[0.97]">
+        Trainix — Розкрий свій{" "}
         <span className="bg-[linear-gradient(180deg,#d8ff92_0%,#91f35c_45%,#5adf63_100%)] bg-clip-text text-transparent">
-          ідеальної форми!
+          фізичний потенціал!
         </span>
       </h1>
 

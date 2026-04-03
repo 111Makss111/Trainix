@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Particle = {
   x: number;
@@ -14,8 +14,30 @@ type Particle = {
 
 export function CursorMagicTrail() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [isEnabled, setIsEnabled] = useState(false);
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia(
+      "(min-width: 1024px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
+    );
+
+    const syncAvailability = () => {
+      setIsEnabled(mediaQuery.matches);
+    };
+
+    syncAvailability();
+    mediaQuery.addEventListener("change", syncAvailability);
+
+    return () => {
+      mediaQuery.removeEventListener("change", syncAvailability);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isEnabled) {
+      return;
+    }
+
     const canvas = canvasRef.current;
     const context = canvas?.getContext("2d");
 
@@ -173,7 +195,11 @@ export function CursorMagicTrail() {
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("pointerleave", handlePointerLeave);
     };
-  }, []);
+  }, [isEnabled]);
+
+  if (!isEnabled) {
+    return null;
+  }
 
   return (
     <canvas

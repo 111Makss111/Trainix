@@ -13,8 +13,33 @@ export function useRepeatedReveal<T extends HTMLElement>({
 }: UseRepeatedRevealOptions = {}) {
   const ref = useRef<T>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [shouldAnimate, setShouldAnimate] = useState(false);
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia(
+      "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
+    );
+
+    const syncAnimationMode = () => {
+      const canAnimate = mediaQuery.matches;
+
+      setShouldAnimate(canAnimate);
+      setIsVisible((currentValue) => (canAnimate ? currentValue : true));
+    };
+
+    syncAnimationMode();
+    mediaQuery.addEventListener("change", syncAnimationMode);
+
+    return () => {
+      mediaQuery.removeEventListener("change", syncAnimationMode);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!shouldAnimate) {
+      return;
+    }
+
     const node = ref.current;
 
     if (!node) {
@@ -34,7 +59,7 @@ export function useRepeatedReveal<T extends HTMLElement>({
     observer.observe(node);
 
     return () => observer.disconnect();
-  }, [threshold, rootMargin]);
+  }, [threshold, rootMargin, shouldAnimate]);
 
   return { ref, isVisible };
 }

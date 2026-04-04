@@ -20,7 +20,7 @@ export default function TermsPage() {
           label: "Модель доступу",
           value: "Landing page, free beta APK, optional support, future in-app subscriptions",
         },
-        { label: "Контакт", value: "777docmax777@gmail.com" },
+          { label: "Контакт", value: "support.trainix@gmail.com" },
       ]}
       links={[
         { label: "Privacy Policy", href: "/privacy" },

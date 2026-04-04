@@ -28,7 +28,7 @@ const contactLinks: FooterLink[] = [
   },
   {
     label: "support.trainix@gmail.com",
-    href: "mailto:777docmax777@gmail.com",
+      href: "mailto:support.trainix@gmail.com",
     external: true,
   },
 ];

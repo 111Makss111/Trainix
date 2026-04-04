@@ -23,7 +23,7 @@ export default function ContactPage() {
       links={[
         {
           label: "Написати email",
-          href: "mailto:777docmax777@gmail.com",
+            href: "mailto:support.trainix@gmail.com",
           external: true,
         },
         {

@@ -61,6 +61,22 @@ export function CommunityScene({ isVisible }: CommunitySceneProps) {
     let frameId = 0;
     let mixer: THREE.AnimationMixer | null = null;
     let modelRoot: THREE.Group | null = null;
+    let primaryAction: THREE.AnimationAction | null = null;
+    let secondaryAction: THREE.AnimationAction | null = null;
+    let clipDuration = 0;
+    let isCrossfading = false;
+    let crossfadeProgress = 0;
+    let shouldRender = true;
+
+    const isMobile = window.matchMedia("(max-width: 1023px)").matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const loopCrossfadeDuration = prefersReducedMotion
+      ? 0.45
+      : isMobile
+        ? 0.9
+        : 0.7;
 
     const clock = new THREE.Clock();
     const scene = new THREE.Scene();
@@ -70,15 +86,17 @@ export function CommunityScene({ isVisible }: CommunitySceneProps) {
 
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
-      antialias: true,
-      powerPreference: "high-performance",
+      antialias: !isMobile,
+      powerPreference: isMobile ? "default" : "high-performance",
     });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+    renderer.setPixelRatio(
+      Math.min(window.devicePixelRatio, isMobile ? 1.15 : 1.75),
+    );
     renderer.setClearColor(0x000000, 0);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.12;
-    renderer.shadowMap.enabled = true;
+    renderer.toneMappingExposure = isMobile ? 1.06 : 1.12;
+    renderer.shadowMap.enabled = !isMobile;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.domElement.className = "h-full w-full";
 
@@ -93,8 +111,8 @@ export function CommunityScene({ isVisible }: CommunitySceneProps) {
 
     const keyLight = new THREE.SpotLight(0xffddb1, 150, 28, Math.PI / 5, 0.35);
     keyLight.position.set(3.6, 5.6, 4.6);
-    keyLight.castShadow = true;
-    keyLight.shadow.mapSize.set(1024, 1024);
+    keyLight.castShadow = !isMobile;
+    keyLight.shadow.mapSize.set(isMobile ? 512 : 1024, isMobile ? 512 : 1024);
     keyLight.shadow.bias = -0.00008;
     keyLight.target = keyTarget;
     scene.add(keyLight);
@@ -203,16 +221,33 @@ export function CommunityScene({ isVisible }: CommunitySceneProps) {
           -scaledBounds.min.y,
           -scaledCenter.z,
         );
-        asset.position.x -= 0.08;
-        asset.rotation.y = 0.24;
+        asset.position.x += isMobile ? 0.02 : -0.08;
+        asset.rotation.y = isMobile ? 0.18 : 0.24;
 
-        camera.position.set(0.2, scaledSize.y * 0.54, 6.15);
+        camera.position.set(isMobile ? 0.02 : 0.2, scaledSize.y * 0.54, 6.15);
         camera.lookAt(0, scaledSize.y * 0.5, 0);
 
         if (asset.animations.length > 0) {
           mixer = new THREE.AnimationMixer(asset);
-          const action = mixer.clipAction(asset.animations[0]);
-          action.play();
+
+          const baseClip = asset.animations[0];
+          const loopClip = baseClip.clone();
+          const alternateClip = baseClip.clone();
+          alternateClip.name = `${baseClip.name}_alt`;
+
+          primaryAction = mixer.clipAction(loopClip);
+          secondaryAction = mixer.clipAction(alternateClip);
+          clipDuration = loopClip.duration;
+
+          primaryAction.setLoop(THREE.LoopOnce, 1);
+          primaryAction.clampWhenFinished = true;
+          primaryAction.enabled = true;
+          primaryAction.play();
+
+          secondaryAction.setLoop(THREE.LoopOnce, 1);
+          secondaryAction.clampWhenFinished = true;
+          secondaryAction.enabled = false;
+          secondaryAction.setEffectiveWeight(0);
         }
 
         scene.add(asset);
@@ -241,9 +276,77 @@ export function CommunityScene({ isVisible }: CommunitySceneProps) {
     observer.observe(mountNode);
     resize();
 
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        shouldRender = entry.isIntersecting || entry.intersectionRatio > 0.08;
+      },
+      {
+        threshold: [0, 0.08, 0.2],
+      },
+    );
+    visibilityObserver.observe(mountNode);
+
     const renderFrame = () => {
+      if (document.visibilityState !== "visible" || !shouldRender) {
+        frameId = window.requestAnimationFrame(renderFrame);
+        return;
+      }
+
       const delta = Math.min(clock.getDelta(), 1 / 30);
-      mixer?.update(delta);
+
+      if (
+        mixer &&
+        primaryAction &&
+        secondaryAction &&
+        clipDuration > loopCrossfadeDuration
+      ) {
+        if (
+          !isCrossfading &&
+          clipDuration - primaryAction.time <= loopCrossfadeDuration
+        ) {
+          isCrossfading = true;
+          crossfadeProgress = 0;
+
+          secondaryAction.reset();
+          secondaryAction.enabled = true;
+          secondaryAction.paused = false;
+          secondaryAction.setLoop(THREE.LoopOnce, 1);
+          secondaryAction.clampWhenFinished = true;
+          secondaryAction.setEffectiveWeight(0);
+          secondaryAction.play();
+        }
+
+        if (isCrossfading) {
+          crossfadeProgress = Math.min(
+            crossfadeProgress + delta / loopCrossfadeDuration,
+            1,
+          );
+
+          primaryAction.setEffectiveWeight(1 - crossfadeProgress);
+          secondaryAction.setEffectiveWeight(crossfadeProgress);
+        }
+
+        mixer.update(delta);
+
+        if (isCrossfading && crossfadeProgress >= 1) {
+          primaryAction.stop();
+          primaryAction.reset();
+          primaryAction.enabled = false;
+          primaryAction.setEffectiveWeight(0);
+
+          const nextPrimary = secondaryAction;
+          const nextSecondary = primaryAction;
+
+          primaryAction = nextPrimary;
+          secondaryAction = nextSecondary;
+          primaryAction.setEffectiveWeight(1);
+          isCrossfading = false;
+          crossfadeProgress = 0;
+        }
+      } else {
+        mixer?.update(delta);
+      }
+
       renderer.render(scene, camera);
       frameId = window.requestAnimationFrame(renderFrame);
     };
@@ -252,6 +355,7 @@ export function CommunityScene({ isVisible }: CommunitySceneProps) {
 
     return () => {
       observer.disconnect();
+      visibilityObserver.disconnect();
       window.cancelAnimationFrame(frameId);
 
       disposeGroup(modelRoot);
@@ -268,7 +372,7 @@ export function CommunityScene({ isVisible }: CommunitySceneProps) {
 
   return (
     <div
-      className={`relative min-h-[420px] overflow-hidden rounded-[28px]  transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${isVisible ? "translate-x-0 opacity-100 blur-0" : "-translate-x-8 opacity-0 blur-md"} sm:min-h-[520px] lg:min-h-[640px]`}
+      className={`relative mx-auto min-h-[380px] w-full max-w-[560px] overflow-hidden rounded-[28px] transition-all duration-[950ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${isVisible ? "translate-x-0 opacity-100 blur-0" : "-translate-x-8 opacity-0 blur-md"} sm:min-h-[500px] lg:max-w-none lg:min-h-[640px]`}
     >
       <div
         ref={mountRef}
@@ -280,8 +384,8 @@ export function CommunityScene({ isVisible }: CommunitySceneProps) {
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           <div className="rounded-full border border-white/8 bg-black/24 px-4 py-2 text-sm text-white/58 backdrop-blur-md">
             {status === "loading"
-              ? "Loading model..."
-              : "Model could not be loaded"}
+              ? "Завантажуємо сцену..."
+              : "Сцену не вдалося завантажити"}
           </div>
         </div>
       ) : null}

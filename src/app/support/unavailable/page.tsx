@@ -31,7 +31,7 @@ export default async function SupportUnavailablePage({
     <SupportShell
       eyebrow="Тимчасово недоступно"
       title="Підтримку поки не вдалося провести."
-      description={`${reason} Якщо проблема повторюється, можна повернутися на головну, а також написати напряму на 777docmax777@gmail.com.`}
+          description={`${reason} Якщо проблема повторюється, можна повернутися на головну, а також написати напряму на support.trainix@gmail.com.`}
       primaryHref="/download"
       primaryLabel="Перейти до APK"
       secondaryHref="/contact"

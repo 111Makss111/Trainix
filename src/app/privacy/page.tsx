@@ -16,7 +16,7 @@ export default function PrivacyPage() {
       lastUpdated="March 17, 2026"
       facts={[
         { label: "Продукт", value: "Trainix early beta" },
-        { label: "Контакт", value: "777docmax777@gmail.com" },
+          { label: "Контакт", value: "support.trainix@gmail.com" },
         { label: "Основний канал", value: "Telegram community + direct email" },
       ]}
       links={[
@@ -73,7 +73,7 @@ export default function PrivacyPage() {
           title: "5. Ваші права",
           paragraphs: [
             "Ти можеш запросити інформацію про свої дані, попросити виправити їх або видалити, якщо вони більше не потрібні для взаємодії з Trainix.",
-            "Щоб скористатися цими правами, достатньо написати на 777docmax777@gmail.com із темою листа, яка коротко описує запит.",
+            "Щоб скористатися цими правами, достатньо написати на support.trainix@gmail.com із темою листа, яка коротко описує запит.",
           ],
         },
         {

@@ -12,7 +12,7 @@ const featureCards: FeatureCardData[] = [
   {
     title: "ШІ-тренер",
     description:
-      "Підлаштовує навантаження під твою ціль, аналізує прогрес і пропонує вправи на день без ручного планування.",
+      "Підлаштовує навантаження під твою ціль, аналізує прогрес і щодня підказує, що робити далі.",
 
     stat: "24/7",
     tone: "lime",
@@ -22,9 +22,9 @@ const featureCards: FeatureCardData[] = [
   {
     title: "Фітнес-трекер",
     description:
-      "Пульс, кроки, калорії, сон і активність зібрані в одному таймлайні, щоб бачити реальну динаміку.",
+      "Пульс, кроки, калорії, сон і активність зібрані в одному місці, щоб бачити реальний прогрес.",
 
-    stat: "Pulse",
+    stat: "Пульс",
     tone: "cyan",
     size: "small",
     icon: "pulse",
@@ -32,9 +32,9 @@ const featureCards: FeatureCardData[] = [
   {
     title: "Підключення гаджетів",
     description:
-      "Синхронізація з wearable-пристроями та сенсорами, щоб дані автоматично потрапляли в застосунок.",
+      "Синхронізує wearable-пристрої та сенсори, щоб дані автоматично потрапляли у застосунок.",
 
-    stat: "Sync",
+    stat: "Синхр.",
     tone: "amber",
     size: "small",
     icon: "watch",
@@ -42,7 +42,7 @@ const featureCards: FeatureCardData[] = [
   {
     title: "Бібліотека вправ",
     description:
-      "Вправи для дому, залу і вулиці з фільтрами по рівню, обладнанню, м'язових групах і форматах занять.",
+      "Вправи для дому, залу й вулиці з фільтрами за рівнем, обладнанням і м'язовими групами.",
 
     stat: "600+",
     tone: "emerald",
@@ -52,9 +52,9 @@ const featureCards: FeatureCardData[] = [
   {
     title: "Персональні плани",
     description:
-      "Програми на схуднення, набір форми, силу, кардіо та відновлення з поступовим ростом інтенсивності.",
+      "Програми на схуднення, силу, кардіо та відновлення з поступовим ростом інтенсивності.",
 
-    stat: "Goals",
+    stat: "Цілі",
     tone: "teal",
     size: "small",
     icon: "target",
@@ -203,57 +203,58 @@ function FeatureCard({ feature, delay, isVisible }: FeatureCardProps) {
 
   return (
     <article
-      className={`group relative overflow-hidden rounded-[28px] border border-white/10 bg-transparent p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-[2px] transition-[opacity,transform,filter,border-color,box-shadow,background-color] duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-white/14 hover:bg-white/[0.015] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_12px_26px_rgba(0,0,0,0.06)] ${isVisible ? "translate-y-0 scale-100 opacity-100 blur-0" : "translate-y-12 scale-[0.975] opacity-0 blur-md"} ${feature.size === "large" ? "min-h-[340px] lg:col-span-6 lg:row-span-2" : "min-h-[240px] lg:col-span-3"}`}
+      className={`group relative overflow-hidden rounded-[24px] border border-white/10 bg-white/[0.015] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-[opacity,transform,filter,border-color,background-color,box-shadow] duration-[820ms] ease-[cubic-bezier(0.19,1,0.22,1)] sm:p-5 lg:rounded-[28px] lg:bg-transparent lg:shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] lg:backdrop-blur-[2px] lg:hover:-translate-y-[6px] lg:hover:border-white/18 lg:hover:bg-white/[0.026] lg:hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_18px_42px_rgba(0,0,0,0.14)] ${isVisible ? "translate-y-0 scale-100 opacity-100 blur-0" : "translate-y-10 scale-[0.985] opacity-0 blur-md"} ${feature.size === "large" ? "min-h-[300px] sm:col-span-2 sm:min-h-[320px] lg:col-span-6 lg:row-span-2 lg:min-h-[340px]" : "min-h-[210px] sm:min-h-[220px] lg:col-span-3 lg:min-h-[240px]"}`}
       style={{ transitionDelay: isVisible ? `${delay}ms` : "0ms" }}
     >
       <div
-        className={`pointer-events-none absolute inset-0 bg-gradient-to-br opacity-80 ${tone.glow}`}
+        className={`pointer-events-none absolute inset-0 bg-gradient-to-br opacity-65 transition-opacity duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] lg:opacity-70 lg:group-hover:opacity-95 ${tone.glow}`}
       />
-      <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/12 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.12),transparent_42%)] opacity-0 transition-opacity duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] lg:group-hover:opacity-90" />
+      <div className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-white/12 to-transparent transition-opacity duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] sm:inset-x-6 lg:group-hover:opacity-100" />
 
       <div className="relative flex h-full flex-col">
         <div className="flex items-start justify-between gap-4">
           <div
-            className={`flex h-12 w-12 items-center justify-center rounded-2xl text-[#071108] shadow-[0_12px_24px_rgba(0,0,0,0.18)] ${tone.icon}`}
+            className={`flex h-11 w-11 items-center justify-center rounded-2xl text-[#071108] shadow-[0_10px_18px_rgba(0,0,0,0.16)] transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] sm:h-12 sm:w-12 sm:shadow-[0_12px_24px_rgba(0,0,0,0.18)] lg:group-hover:scale-[1.035] lg:group-hover:shadow-[0_15px_26px_rgba(0,0,0,0.2)] ${tone.icon}`}
           >
             <FeatureIcon icon={feature.icon} />
           </div>
           <span
-            className={`inline-flex rounded-full border px-3 py-1 text-[0.65rem] font-medium uppercase tracking-[0.18em] ${tone.badge}`}
+            className={`inline-flex rounded-full border px-2.5 py-1 text-[0.62rem] font-medium uppercase tracking-[0.16em] transition-[transform,color,border-color,background-color] duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] sm:px-3 lg:group-hover:-translate-y-px lg:group-hover:border-white/18 lg:group-hover:text-white ${tone.badge}`}
           >
             {feature.stat}
           </span>
         </div>
 
-        <div className="mt-8">
+        <div className="mt-6 sm:mt-7">
           <h3
-            className={`mt-3 font-semibold tracking-[-0.04em] text-white ${feature.size === "large" ? "text-3xl sm:text-[2.2rem]" : "text-2xl"}`}
+            className={`mt-3 font-semibold tracking-[-0.04em] text-white transition-[transform,color] duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] lg:group-hover:translate-x-px lg:group-hover:text-white ${feature.size === "large" ? "text-[1.9rem] sm:text-[2.2rem]" : "text-[1.55rem] sm:text-2xl"}`}
           >
             {feature.title}
           </h3>
           <p
-            className={`mt-4 max-w-[34ch] leading-7 text-white/66 ${feature.size === "large" ? "text-base" : "text-sm"}`}
+            className={`mt-4 max-w-[36ch] leading-6 text-white/68 transition-colors duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] sm:leading-7 lg:group-hover:text-white/76 ${feature.size === "large" ? "text-sm sm:text-base" : "text-sm"}`}
           >
             {feature.description}
           </p>
         </div>
 
-        <div className="mt-auto pt-8">
+        <div className="mt-auto pt-6 sm:pt-8">
           {feature.size === "large" ? (
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
               {[
                 { label: "плани", value: "AI" },
                 { label: "рівні", value: "3+" },
-                { label: "режим", value: "Home" },
+                { label: "режим", value: "Вдома" },
               ].map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-[20px] border border-white/8 bg-transparent px-4 py-3 backdrop-blur-[2px]"
+                  className="rounded-[18px] border border-white/8 bg-white/[0.02] px-3 py-2.5 sm:px-4 sm:py-3 lg:rounded-[20px] lg:bg-transparent lg:backdrop-blur-[2px]"
                 >
                   <p className="text-[0.62rem] uppercase tracking-[0.18em] text-white/36">
                     {item.label}
                   </p>
-                  <p className="mt-2 text-sm font-semibold text-white/92">
+                  <p className="mt-2 text-xs font-semibold text-white/92 sm:text-sm">
                     {item.value}
                   </p>
                 </div>
@@ -276,7 +277,7 @@ export function FeatureGrid({ isVisible }: FeatureGridProps) {
   const [highlight, ...cards] = featureCards;
 
   return (
-    <div className="mt-10 grid gap-4 lg:grid-cols-12">
+    <div className="mt-8 grid gap-3.5 sm:mt-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-4">
       <FeatureCard feature={highlight} delay={140} isVisible={isVisible} />
       {cards.map((feature, index) => (
         <FeatureCard

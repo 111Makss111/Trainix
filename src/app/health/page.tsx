@@ -17,7 +17,7 @@ export default function HealthPage() {
       facts={[
         { label: "Категорія", value: "Fitness and wellness product" },
         { label: "Не є", value: "Medical device or medical advice service" },
-        { label: "Контакт", value: "777docmax777@gmail.com" },
+          { label: "Контакт", value: "support.trainix@gmail.com" },
       ]}
       links={[
         { label: "Privacy Policy", href: "/privacy" },

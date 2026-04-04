@@ -1,5 +1,3 @@
-import type { CheckoutPlanId } from "@/utils/support-plans";
-
 function isMissing(value: string | undefined) {
   return !value || value.trim().length === 0;
 }
@@ -8,7 +6,7 @@ export function isApkConfigured() {
   return !isMissing(process.env.TRAINIX_APK_PATH) || !isMissing(process.env.TRAINIX_APK_URL);
 }
 
-export function getSupportCheckoutMissingConfig(planId: CheckoutPlanId) {
+export function getSupportCheckoutMissingConfig() {
   const missing: string[] = [];
 
   if (isMissing(process.env.DATABASE_URL)) {
@@ -19,10 +17,7 @@ export function getSupportCheckoutMissingConfig(planId: CheckoutPlanId) {
     missing.push("STRIPE_SECRET_KEY");
   }
 
-  if (
-    planId === "support_trainix" &&
-    isMissing(process.env.TRAINIX_SUPPORT_DONATION_PRICE_ID)
-  ) {
+  if (isMissing(process.env.TRAINIX_SUPPORT_DONATION_PRICE_ID)) {
     missing.push("TRAINIX_SUPPORT_DONATION_PRICE_ID");
   }
 

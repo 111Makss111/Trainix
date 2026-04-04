@@ -49,12 +49,13 @@ npm run dev
 
 ## Flow Overview
 
-1. The pricing section offers a free APK option and an optional donation.
-2. The donation card posts to `/api/support/checkout`.
-3. Stripe webhook events write or update donation records in Neon.
-4. Stripe sends the user back to `/support/claim?session_id=...`.
-5. The app verifies the donation and redirects to `/download?support=success`.
-6. `/api/download/apk` serves the APK publicly.
+1. The pricing section offers a free APK option and an optional support flow.
+2. The support card posts directly to `/api/support/checkout`.
+3. Stripe Checkout opens and lets the customer choose the donation amount there.
+4. Stripe webhook events write or update donation records in Neon.
+5. Stripe sends the user back to `/support/claim?session_id=...`.
+6. The app verifies the donation and redirects to `/download?support=success`.
+7. `/api/download/apk` serves the APK publicly.
 
 ## Notes
 
@@ -63,6 +64,7 @@ npm run dev
 - `TRAINIX_APK_URL` is better when the APK already lives in object storage or behind a CDN.
 - If both are set, the remote URL takes precedence.
 - Donation records stay in Neon even though APK access is free.
+- `TRAINIX_SUPPORT_DONATION_PRICE_ID` should point to a Stripe price configured with `customer chooses price`.
 
 ## Learn More
 

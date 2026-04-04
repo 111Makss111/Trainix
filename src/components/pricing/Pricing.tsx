@@ -5,9 +5,9 @@ import { PricingIntro } from "./content/PricingIntro";
 import { PricingPlans } from "./plans/PricingPlans";
 
 const summaryItems = [
-  "APK доступний безкоштовно",
-  "Донат тільки за бажанням",
-  "Підписки будуть у додатку",
+  "Безкоштовний старт уже відкритий",
+  "Trainix Plus готується в додатку",
+  "Support доступний уже зараз",
 ];
 
 export function Pricing() {
@@ -35,7 +35,7 @@ export function Pricing() {
           {summaryItems.map((item) => (
             <div
               key={item}
-              className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/68 backdrop-blur-md"
+              className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-3 text-center text-sm text-white/68 backdrop-blur-md"
             >
               {item}
             </div>

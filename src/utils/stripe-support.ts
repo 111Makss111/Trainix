@@ -1,6 +1,6 @@
 import Stripe from "stripe";
 
-import type { CheckoutPlanId } from "@/utils/support-plans";
+import { type CheckoutPlanId } from "@/utils/support-plans";
 
 let stripeClient: Stripe | null = null;
 
@@ -22,12 +22,14 @@ export function getStripe() {
   return stripeClient;
 }
 
-function getPriceId(planId: CheckoutPlanId) {
-  if (planId === "support_trainix") {
-    return process.env.TRAINIX_SUPPORT_DONATION_PRICE_ID;
+function getSupportDonationPriceId() {
+  const priceId = process.env.TRAINIX_SUPPORT_DONATION_PRICE_ID;
+
+  if (!priceId) {
+    throw new Error("TRAINIX_SUPPORT_DONATION_PRICE_ID is not configured.");
   }
 
-  return null;
+  return priceId;
 }
 
 export async function createCheckoutSession({
@@ -37,23 +39,22 @@ export async function createCheckoutSession({
   planId: CheckoutPlanId;
   origin: string;
 }) {
-  const priceId = getPriceId(planId);
-
-  if (!priceId) {
-    throw new Error(`Stripe price ID is missing for plan ${planId}.`);
-  }
-
   return getStripe().checkout.sessions.create({
     mode: "payment",
     success_url: `${origin}/support/claim?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/support/cancel`,
-    line_items: [{ price: priceId, quantity: 1 }],
+    line_items: [
+      {
+        price: getSupportDonationPriceId(),
+        quantity: 1,
+      },
+    ],
     metadata: {
       plan_id: planId,
     },
     billing_address_collection: "auto",
     customer_creation: "always",
-    allow_promotion_codes: true,
+    allow_promotion_codes: false,
   });
 }
 

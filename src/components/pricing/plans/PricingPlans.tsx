@@ -1,4 +1,6 @@
-import { pricingPlans } from "@/utils/support-plans";
+﻿"use client";
+
+import { pricingPlans, type PricingPlan } from "@/utils/support-plans";
 
 type PricingPlansProps = {
   isVisible: boolean;
@@ -18,6 +20,21 @@ function CheckIcon() {
         strokeLinejoin="round"
       />
     </svg>
+  );
+}
+
+function SupportCheckoutAction({ plan }: { plan: PricingPlan }) {
+  return (
+    <form action="/api/support/checkout" method="POST">
+      <input type="hidden" name="planId" value={plan.checkoutPlanId} />
+
+      <button
+        type="submit"
+        className="mt-4 inline-flex h-12 w-full items-center justify-center rounded-full border border-amber-200/18 bg-[linear-gradient(135deg,rgba(255,226,180,0.22),rgba(255,226,180,0.08))] px-5 text-sm font-medium text-white transition-all duration-300 hover:border-amber-200/24 hover:bg-[linear-gradient(135deg,rgba(255,226,180,0.28),rgba(255,226,180,0.12))]"
+      >
+        {plan.cta}
+      </button>
+    </form>
   );
 }
 
@@ -64,15 +81,21 @@ export function PricingPlans({ isVisible }: PricingPlansProps) {
             </div>
 
             <div className="mt-8 flex items-end gap-2">
-              <span className="text-4xl font-semibold tracking-[-0.05em] text-white">
+              <span
+                className={`font-semibold tracking-[-0.05em] text-white ${
+                  plan.featured ? "text-[2.7rem] sm:text-5xl" : "text-4xl"
+                }`}
+              >
                 {plan.price}
               </span>
-              <span className="pb-1 text-sm text-white/44">
-                {plan.price !== "0 zł" ? "/ разово" : ""}
-              </span>
+              {plan.priceSuffix ? (
+                <span className="pb-1 text-sm text-white/44">
+                  {plan.priceSuffix}
+                </span>
+              ) : null}
             </div>
 
-            <p className="mt-4 min-h-[6rem] text-sm leading-7 text-white/62">
+            <p className="mt-4 min-h-[5.8rem] text-sm leading-7 text-white/62">
               {plan.description}
             </p>
 
@@ -98,19 +121,15 @@ export function PricingPlans({ isVisible }: PricingPlansProps) {
 
             <div className="mt-auto flex min-h-[7.5rem] flex-col justify-end pt-8">
               {plan.checkoutPlanId ? (
-                <form action="/api/support/checkout" method="POST">
-                  <input type="hidden" name="planId" value={plan.checkoutPlanId} />
-                  <button
-                    type="submit"
-                    className={`inline-flex h-12 w-full items-center justify-center rounded-full px-5 text-sm font-medium transition-all duration-300 ${
-                      plan.featured
-                        ? "bg-[linear-gradient(90deg,#99f870_0%,#48d66d_100%)] text-[#071108] shadow-[0_18px_40px_rgba(107,255,148,0.22)] hover:brightness-105"
-                        : "border border-white/12 bg-white/7 text-white/88 backdrop-blur-md hover:border-white/18 hover:bg-white/10"
-                    }`}
-                  >
-                    {plan.cta}
-                  </button>
-                </form>
+                <SupportCheckoutAction plan={plan} />
+              ) : plan.ctaState === "disabled" ? (
+                <button
+                  type="button"
+                  disabled
+                  className="inline-flex h-12 w-full cursor-not-allowed items-center justify-center rounded-full border border-violet-200/14 bg-[linear-gradient(135deg,rgba(130,104,255,0.18),rgba(130,104,255,0.08))] px-5 text-sm font-medium text-white/72"
+                >
+                  {plan.cta}
+                </button>
               ) : (
                 <a
                   href={plan.href ?? "#community"}

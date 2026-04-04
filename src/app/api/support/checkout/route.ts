@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const missingConfig = getSupportCheckoutMissingConfig(planId);
+  const missingConfig = getSupportCheckoutMissingConfig();
 
   if (missingConfig.length > 0) {
     return NextResponse.redirect(

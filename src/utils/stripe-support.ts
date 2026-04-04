@@ -55,12 +55,6 @@ export async function createCheckoutSession({
     billing_address_collection: "auto",
     customer_creation: "always",
     allow_promotion_codes: false,
-    payment_method_collection: "always",
-    wallet_options: {
-      link: {
-        display: "never",
-      },
-    },
   });
 }
 

@@ -5,8 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
+    "start": "next dev",
+    "start:prod": "next start",
+    "lint": "eslint .",
     "git": "git add -A && git commit -m \"ship it\" && git pull --rebase && git push"
   },
   "dependencies": {

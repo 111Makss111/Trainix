@@ -44,7 +44,14 @@ Subscribe at least to:
 6. Run the development server:
 
 ```bash
-npm run dev
+npm start
+```
+
+For a production start after building:
+
+```bash
+npm run build
+npm run start:prod
 ```
 
 ## Flow Overview

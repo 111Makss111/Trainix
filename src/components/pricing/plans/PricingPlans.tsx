@@ -1,6 +1,9 @@
 ﻿"use client";
 
-import { pricingPlans, type PricingPlan } from "@/utils/support-plans";
+import {
+  pricingPlans,
+  type PricingPlan,
+} from "@/utils/support-plans";
 
 type PricingPlansProps = {
   isVisible: boolean;
@@ -27,6 +30,11 @@ function SupportCheckoutAction({ plan }: { plan: PricingPlan }) {
   return (
     <form action="/api/support/checkout" method="POST">
       <input type="hidden" name="planId" value={plan.checkoutPlanId} />
+
+      <p className="text-sm leading-6 text-white/54">
+        Після натискання відкриється Stripe Checkout, де клієнт сам обере суму
+        підтримки перед оплатою.
+      </p>
 
       <button
         type="submit"

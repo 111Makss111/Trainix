@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "ship": "git add -A && git commit -m \"ship it\" && git pull --rebase && git push"
+    "git": "git add -A && git commit -m \"ship it\" && git pull --rebase && git push"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",

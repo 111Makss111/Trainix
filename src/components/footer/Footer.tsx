@@ -28,7 +28,7 @@ const contactLinks: FooterLink[] = [
   },
   {
     label: "support.trainix@gmail.com",
-      href: "mailto:support.trainix@gmail.com",
+    href: "mailto:support.trainix@gmail.com",
     external: true,
   },
 ];
@@ -88,12 +88,6 @@ export function Footer() {
             Перший офіційний простір для beta-продукту, спільноти та майбутніх
             релізів
           </h2>
-          <p className="mt-4 max-w-[32rem] text-center text-sm leading-6 text-white/64 sm:text-left sm:text-[0.96rem] sm:leading-7">
-            Тут зібрані основні секції лендингу, офіційні сторінки продукту та
-            контактні канали. Коли Trainix перейде від ранньої beta до
-            стабільного застосунку, саме ці сторінки стануть базою для
-            публічного релізу
-          </p>
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2 sm:gap-6">

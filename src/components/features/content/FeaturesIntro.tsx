@@ -15,12 +15,11 @@ export function FeaturesIntro({ isVisible }: FeaturesIntroProps) {
         <span className="bg-[linear-gradient(180deg,#d8ff92_0%,#91f35c_45%,#5adf63_100%)] bg-clip-text text-transparent">
           розумного тренування
         </span>
-        .
       </h2>
       <p className="mt-5 max-w-[58ch] text-sm leading-6 text-white/70 sm:text-base sm:leading-7">
         Trainix поєднує ШІ-тренера, фітнес-трекер, вправи, гаджети і
         персональні плани в одному мобільному застосунку, щоб прогрес було
-        видно щодня, а не раз на місяць.
+        видно щодня, а не раз на місяць
       </p>
     </div>
   );

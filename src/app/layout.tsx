@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     template: "%s | Trainix",
   },
   description:
-    "Trainix is an early fitness product with AI-driven guidance, community access, and beta-ready landing experience.",
+    "Trainix is an early fitness product with AI-driven guidance, community access, and beta-ready landing experience",
 };
 
 export default function RootLayout({

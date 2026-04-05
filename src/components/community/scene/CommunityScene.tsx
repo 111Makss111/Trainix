@@ -384,7 +384,7 @@ export function CommunityScene({ isVisible }: CommunitySceneProps) {
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           <div className="rounded-full border border-white/8 bg-black/24 px-4 py-2 text-sm text-white/58 backdrop-blur-md">
             {status === "loading"
-              ? "Завантажуємо сцену..."
+          ? "Завантажуємо сцену"
               : "Сцену не вдалося завантажити"}
           </div>
         </div>

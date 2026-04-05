@@ -11,8 +11,8 @@ export function HeroContent() {
       </h1>
 
       <p className="mx-auto mt-5 max-w-[34ch] text-sm leading-7 text-white/72 sm:mt-6 sm:max-w-[54ch] sm:text-base lg:mx-0">
-        Досягайте нових цілей та покращуйте свої тренування. Ваш персональний
-        тренер для занять вдома, на вулиці та у залі.
+        Досягайте нових цілей та покращуйте свої тренування, а Trainix стане
+        персональним тренером для занять вдома, на вулиці та у залі
       </p>
 
       <div className="mt-7 flex flex-col items-stretch gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center lg:items-start">

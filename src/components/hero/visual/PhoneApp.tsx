@@ -27,7 +27,7 @@ export function PhoneApp({ scrollProgress }: PhoneAppProps) {
             <div className="h-9 w-9 rounded-full bg-[radial-gradient(circle_at_40%_28%,#eefbd7_0%,#7ce08d_36%,#23573a_100%)] ring-2 ring-white/70" />
             <div>
               <p className="text-[0.74rem] font-semibold tracking-[-0.03em]">
-                Яна Я.
+                Яна Я
               </p>
               <p className="text-[0.58rem] text-[#7d8585]">Level cardio pro</p>
             </div>
@@ -100,7 +100,7 @@ export function PhoneApp({ scrollProgress }: PhoneAppProps) {
                 <span>18:30</span>
               </div>
               <p className="mt-2 text-[0.78rem] leading-5 text-white/92">
-                Tempo run, lower-body stretch, and a short cooldown walk.
+                Tempo run, lower-body stretch, and a short cooldown walk
               </p>
             </div>
           </section>

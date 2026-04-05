@@ -6,7 +6,7 @@ import { isApkConfigured } from "@/utils/support-config";
 
 export const metadata: Metadata = {
   title: "Скачати APK",
-  description: "Безкоштовне скачування Android beta APK для Trainix.",
+  description: "Безкоштовне скачування Android beta APK для Trainix",
 };
 
 export default async function DownloadPage({
@@ -20,8 +20,8 @@ export default async function DownloadPage({
   return (
     <SupportShell
       eyebrow="Безкоштовний beta-доступ"
-      title="APK можна отримати безкоштовно."
-      description="Trainix зараз на ранньому етапі, тому Android beta APK доступний без оплати. Якщо проект тобі відгукується, підтримати його можна окремо добровільним донатом."
+      title="APK можна отримати безкоштовно"
+      description="Trainix зараз на ранньому етапі, тому Android beta APK доступний без оплати, а якщо проект тобі відгукується, підтримати його можна окремо добровільним донатом"
       secondaryHref="/#pricing"
       secondaryLabel="Повернутися до секції"
     >
@@ -30,7 +30,7 @@ export default async function DownloadPage({
           <p className="text-sm font-semibold text-white">Trainix Android beta APK</p>
           <p className="mt-2 text-sm leading-7 text-white/62">
             Це безкоштовна beta-версія, щоб познайомитися з продуктом і
-            спокійно спробувати Trainix уже зараз.
+            спокійно спробувати Trainix уже зараз
           </p>
 
           <div className="mt-5 flex flex-wrap gap-3 text-sm text-white/62">
@@ -56,14 +56,14 @@ export default async function DownloadPage({
             <div className="mt-6 rounded-[18px] border border-amber-200/16 bg-amber-200/[0.05] px-4 py-4 text-sm leading-7 text-amber-50/82">
               APK-файл ще не підключений у конфігурації сервера. Після додавання
               `TRAINIX_APK_PATH` або `TRAINIX_APK_URL` кнопка скачування
-              з’явиться тут автоматично.
+              з’явиться тут автоматично
             </div>
           )}
 
           {showThanks ? (
             <div className="mt-6 rounded-[18px] border border-emerald-200/16 bg-emerald-300/[0.08] px-4 py-4 text-sm leading-7 text-emerald-50/90">
               Дякуємо за підтримку Trainix. Донат отримано, а APK, як і
-              обіцяли, залишається безкоштовним для всіх beta-користувачів.
+              обіцяли, залишається безкоштовним для всіх beta-користувачів
             </div>
           ) : null}
         </div>
@@ -71,10 +71,10 @@ export default async function DownloadPage({
         <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
           <p className="text-sm font-semibold text-white">Що важливо знати</p>
           <ul className="mt-4 space-y-3 text-sm leading-7 text-white/62">
-            <li>Це ранній beta-build, тому інтерфейс і поведінка ще можуть змінюватися.</li>
-            <li>Скачування APK безкоштовне і не вимагає донату.</li>
-            <li>Добровільна підтримка не відкриває окремі функції або цифровий контент.</li>
-            <li>Майбутні підписки Trainix з’являться вже всередині самого додатка.</li>
+            <li>Це ранній beta-build, тому інтерфейс і поведінка ще можуть змінюватися</li>
+            <li>Скачування APK безкоштовне і не вимагає донату</li>
+            <li>Добровільна підтримка не відкриває окремі функції або цифровий контент</li>
+            <li>Майбутні підписки Trainix з’являться вже всередині самого додатка</li>
           </ul>
 
           <div className="mt-6">

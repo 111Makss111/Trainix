@@ -135,8 +135,8 @@ export default function Header() {
                 Trainix beta
               </p>
               <p className="mt-2 text-sm leading-6 text-white/68">
-                APK уже доступний безкоштовно. Обери потрібну секцію і швидко
-                подивись, що вміє Trainix.
+                APK уже доступний безкоштовно, обери потрібну секцію і швидко
+                подивись, що вміє Trainix
               </p>
             </div>
 

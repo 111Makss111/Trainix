@@ -173,21 +173,21 @@ export function QuickHelpWidget() {
         aria-controls={panelId}
         aria-label={isOpen ? "Закрити швидку допомогу" : "Відкрити швидку допомогу"}
         onClick={() => setIsOpen((currentState) => !currentState)}
-        className="fixed bottom-4 right-4 z-[60] inline-flex h-14 w-14 items-center justify-center rounded-full border border-emerald-200/18 bg-[linear-gradient(180deg,#102316_0%,#0b1511_100%)] text-white shadow-[0_16px_42px_rgba(0,0,0,0.28)] transition-[transform,border-color,background-color] duration-200 hover:-translate-y-0.5 hover:border-emerald-200/28 sm:h-14 sm:w-auto sm:min-w-[160px] sm:gap-2 sm:px-4"
+        className="fixed bottom-4 right-4 z-[60] inline-flex h-[58px] w-[58px] items-center justify-center rounded-full border border-emerald-200/20 bg-[radial-gradient(circle_at_35%_28%,#173324_0%,#0e1b16_55%,#09100d_100%)] text-white shadow-[0_16px_42px_rgba(0,0,0,0.28)] transition-[transform,border-color,background-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-emerald-200/32 hover:shadow-[0_18px_48px_rgba(0,0,0,0.34)]"
       >
         <svg
           viewBox="0 0 24 24"
-          className="h-5 w-5 fill-none stroke-current"
+          className="h-7 w-7 fill-none stroke-current"
           aria-hidden="true"
         >
           <path
-            d="M7 10.5h10M7 14h6m6.5-2A7.5 7.5 0 0 1 12 19.5c-1.2 0-2.33-.28-3.33-.78L4.5 20l1.28-3.82A7.47 7.47 0 0 1 4.5 12 7.5 7.5 0 1 1 19.5 12Z"
+            d="M12 4.25v2.3M7.5 9.25h9a2.75 2.75 0 0 1 2.75 2.75v3A2.75 2.75 0 0 1 16.5 17.75h-9A2.75 2.75 0 0 1 4.75 15v-3A2.75 2.75 0 0 1 7.5 9.25ZM3.25 12.5h1.5M19.25 12.5h1.5M9.25 12.25h.01M14.75 12.25h.01M9.25 15h5.5"
             strokeWidth="1.8"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
         </svg>
-        <span className="hidden text-sm font-medium sm:inline">Допомога</span>
+        <span className="pointer-events-none absolute inset-0 rounded-full shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]" />
       </button>
     </>
   );
